@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Configuración · {{ workspace.name }}{% endblock %}
+{% block main %}
+  <div class="crumbs">{{ workspace.name }} / Configuración</div>
+  <h1>Configuración</h1>
+  <p class="sub">Solo administradores del portal.</p>
+  {% if saved %}<div class="banner ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Guardado</div>{% endif %}
+  <form class="settings" method="post" action="/configuracion">
+    <label class="field">Nombre del espacio<input type="text" name="nombre" value="{{ workspace.name }}" maxlength="60" required></label>
+    <label class="field">Duración de la sesión<small>Horas, de 1 a 24</small><input type="number" name="horas" min="1" max="24" value="{{ workspace.session_hours }}" required></label>
+    <label class="check"><input type="checkbox" name="passkey_admins"{% if workspace.require_passkey_for_admins %} checked{% endif %}>Pedir passkey a los administradores</label>
+    <div>
+      <div class="row"><span>Inicio de sesión</span><strong>RokuSec</strong></div>
+      <div class="row"><span>Política de riesgo</span><strong>La gestiona RokuSec</strong></div>
+    </div>
+    <div><button class="button" type="submit">Guardar</button></div>
+  </form>
+{% endblock %}
